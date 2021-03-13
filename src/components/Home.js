@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from "react";
-import {temp} from "../services/API.js";
+import API from "../services/API.js";
 
 const Home = () => {
   const [content, setContent] = useState("");
-
+  
   useEffect(() => {
-    console.log(temp())
+    API.temp().then(response => {
+      console.log(response.data)
+    })
+    API.publicTemp().then(response => {
+      console.log(response.data)
+    })
   }, []);
 
   return (
     <div className="container">
       <header className="jumbotron">
-        <h3>Wilkomen</h3>
+        <h3>Przeglad Premier League</h3>
       </header>
     </div>
   );

@@ -1,6 +1,8 @@
-import React from 'react';
 import http from "../http-common.js";
 
-export function temp(){
-    return http.get("/temp").then((response) => response.data)
+const API = {
+    temp: () => http.get('/private/temp'),
+    publicTemp: () => http.get('/public/temp'),
 }
+
+export default API;
