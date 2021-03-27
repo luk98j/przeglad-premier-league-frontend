@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.float-child {
+  width: 50%;
+  float: left;
+  padding: 5px;
+}
+
+.float-container {
+  overflow: hidden;
+}

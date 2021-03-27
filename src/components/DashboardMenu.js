@@ -62,7 +62,7 @@ const DashboardMenu = () => {
         )}
       </nav>
 
-      <div className="container mt-3">
+      <div className="container mt-5">
         <SwitchAndRoute/>
       </div>
     </div>
