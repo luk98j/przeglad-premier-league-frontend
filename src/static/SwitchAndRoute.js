@@ -5,15 +5,13 @@ import Table from "../components/Table"
 import { Switch, Route } from "react-router-dom";
 
 const SwitchAndRoute = () =>{
-    useEffect(() => {
-      
-    }, []);
-
+   
    return(
     <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
-        <Route exact path="/profile" component={Table}/>
+        <Route exact path="/profile" component={Home}/>
+        <Route exact path="/seasons-table" component={Table}/>
     </Switch>
    )
 }
