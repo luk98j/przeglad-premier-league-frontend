@@ -19,6 +19,14 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  menuTile: {
+    color: "white",
+    textDecoration: "none",
+  },
+  menuItem: {
+    color: "black",
+    textDecoration: "none",
+  }
 }));
 
 const DashboardMenu = () => {
@@ -27,7 +35,6 @@ const DashboardMenu = () => {
   const [openMenu, setOpen] = useState(false);
   
   useEffect(() => {
-    console.log(currentUser)
     setCurrentUser(AuthService.getCurrentUser());
   }, []);
 
@@ -47,10 +54,20 @@ const DashboardMenu = () => {
       <AppBar position="static">
         <Toolbar>
         <Typography variant="h6" className={classes.title}>
-          <Link to={"/"}>
+          <Link to={"/"} className={classes.menuTile}> 
               Przegląd Premier League
           </Link>
         </Typography>
+        {menuHeaderForAllUsers.map((key) => {
+        let keyName = Object.keys(key).toString();
+        return (
+          <MenuItem>
+            <Link to={keyName} color="inherit" className={classes.menuTile}>
+              {key[keyName]}
+            </Link>
+          </MenuItem>
+        )}
+      )}
           {currentUser ? (
             <div>
               <IconButton
@@ -78,13 +95,13 @@ const DashboardMenu = () => {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>
-                  <Link to={"/profile"} className="nav-link">
+                  <Link to={"/profile"} className={classes.menuItem}>
                     {currentUser.username}
                   </Link>
                 </MenuItem>
                 
                 <MenuItem onClick={handleClose}>
-                <a href="/login" className="nav-link" onClick={logOut}>
+                <a href="/login" className={classes.menuItem} onClick={logOut}>
                   LogOut
                 </a>
                 </MenuItem>
@@ -93,7 +110,7 @@ const DashboardMenu = () => {
               </div>
           ):(
           <Button color="inherit">
-            <Link to={"/login"} className="nav-link">
+            <Link to={"/login"} className={classes.menuTile}>
                 Login
               </Link>
           </Button>

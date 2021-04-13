@@ -2,13 +2,40 @@ import React, { useState, useRef } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-
 import AuthService from "../services/auth.service";
 import { getQueriesForElement } from "@testing-library/dom";
+import { Container } from "@material-ui/core";
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Avatar from '@material-ui/core/Avatar';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import { AddAlarmOutlined, CenterFocusStrong } from "@material-ui/icons";
+import Button from '@material-ui/core/Button';
+import AlertToast from './AlertToast.js'
 
-const myButton = {
-    color: 'green'
-}
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    margin: 'auto',
+    width: '30%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 const required = (value) => {
   if (!value) {
@@ -23,13 +50,11 @@ const required = (value) => {
 const Login = (props) => {
   const form = useRef();
   const checkBtn = useRef();
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
-  const styles = useRef();
+  const classes = useStyles();
 
   const onChangeUsername = (e) => {
     const username = e.target.value;
@@ -46,10 +71,11 @@ const Login = (props) => {
 
     setMessage("");
     setLoading(true);
-
-    form.current.validateAll();
-
-    if (checkBtn.current.context._errors.length === 0) {
+    if(username.length <0){
+      errorMessage("Podaj login")
+      setLoading(false);
+    }
+    else if (username.length > 0 && password.length >0) {
       AuthService.login(username, password).then(
         () => {
           props.history.push("/profile");
@@ -64,10 +90,11 @@ const Login = (props) => {
             error.toString();
 
           setLoading(false);
-          setMessage(resMessage);
+          errorMessage(resMessage);
         }
       );
     } else {
+      errorMessage("Nie mozna sie zalogowac")
       setLoading(false);
     }
   };
@@ -76,62 +103,77 @@ const Login = (props) => {
     e.preventDefault();
   };
   
+  const errorMessage = (text) =>{
+    return(
+      <AlertToast props={text}/>
+    )
+  }
+
   return (
-    <div className="col-md-6 pt-5 mx-auto">
-      <div className="card card-container p-3">
-        <Form ref={form}>
-          <div className="form-group">
-            <label htmlFor="username">Login</label>
-            <Input
-              type="text"
-              className="form-control"
-              name="username"
-              value={username}
-              onChange={onChangeUsername}
-              validations={[required]}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="password">Hasło</label>
-            <Input
-              type="password"
-              className="form-control"
-              name="password"
-              value={password}
-              onChange={onChangePassword}
-              validations={[required]}
-            />
-          </div>
-
-          <div class="float-container ">
-            <div className="form-group float-child">
-              <button className="btn btn-primary btn-block" disabled={loading} onClick={handleLogin} >
-                {loading && (
-                  <span className="spinner-border spinner-border-sm"></span>
-                )}
-                <span>Zaloguj się</span>
-              </button>
-              </div>
-
-            <div className="form-group float-child">
-              <button className="btn btn-secondary btn-block btn-info" disabled={loading} onClick={handleRegister}>
-                <span>Zarejestruj się</span>
-              </button>
-            </div>
-          </div>
-
-          {message && (
-            <div className="form-group">
-              <div className="alert alert-danger" role="alert">
-                {message}
-              </div>
-            </div>
-          )}
-          <CheckButton style={{ display: "none" }} ref={checkBtn} />
-        </Form>
-      </div>
-    </div>
+    <Container>
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        </div>
+        <form className={classes.form} noValidate>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="login"
+            label="Login"
+            name="login"
+            autoComplete="login"
+            autoFocus
+            value={username}
+            onChange={onChangeUsername}
+            validations={[required]}
+          />
+         <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Hasło"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={onChangePassword}
+            validations={[required]}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={handleLogin}
+            disabled={loading}
+          >
+            Zaloguj się
+          </Button>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            disabled={loading}
+            onClick={handleRegister}
+          >
+            Zarejestruj się
+          </Button>
+        </form>
+      </Container>
+  
   );
 };
 
