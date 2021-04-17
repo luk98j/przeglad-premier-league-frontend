@@ -5,7 +5,12 @@ import API from "../services/API.js";
 const Table = () => {
   
   useEffect(() => {
-    
+    API.getAllSeasonPeriod()
+    .then(
+      (response)=>{
+        console.log(response.data)
+      }
+    )
   }, []);
 
   return (

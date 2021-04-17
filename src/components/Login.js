@@ -14,7 +14,8 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { AddAlarmOutlined, CenterFocusStrong } from "@material-ui/icons";
 import Button from '@material-ui/core/Button';
-import AlertToast from './AlertToast.js'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -104,9 +105,15 @@ const Login = (props) => {
   };
   
   const errorMessage = (text) =>{
-    return(
-      <AlertToast props={text}/>
-    )
+      toast.error(text, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
   }
 
   return (
@@ -172,6 +179,17 @@ const Login = (props) => {
             Zarejestruj się
           </Button>
         </form>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </Container>
   
   );
