@@ -68,6 +68,20 @@ const DashboardMenu = () => {
           </MenuItem>
         )}
       )}
+        {currentUser && (
+          <div>
+        {menuHeaderForAuthUsers.map((key) => {
+          let keyName = Object.keys(key).toString();
+          return (
+            <MenuItem>
+              <Link to={keyName} color="inherit" className={classes.menuTile}>
+                {key[keyName]}
+              </Link>
+            </MenuItem>
+          )}
+        )}
+        </div>
+        )}
           {currentUser ? (
             <div>
               <IconButton

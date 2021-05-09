@@ -6,12 +6,6 @@ const Home = () => {
   const [content, setContent] = useState("");
   
   useEffect(() => {
-    API.temp().then(response => {
-      console.log(response.data)
-    })
-    API.publicTemp().then(response => {
-      console.log(response.data)
-    })
   }, []);
 
   return (
