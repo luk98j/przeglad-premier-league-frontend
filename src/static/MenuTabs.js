@@ -1,5 +1,5 @@
 const menuHeaderForAllUsers =[
-    {"/" : "Przegląd Premier League"},
+    {"/seasons-table" : "Tabela PL"}
 ]
 export default menuHeaderForAllUsers
 

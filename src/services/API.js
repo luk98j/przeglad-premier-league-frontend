@@ -1,8 +1,10 @@
 import http from "../http-common.js";
 
 const API = {
-    temp: () => http.get('/private/temp'),
-    publicTemp: () => http.get('/public/temp'),
+    getAllSeasonPeriod: () => http.get('/public/season-list'),
+    getDetailsAboutSeason: (period) => http.get('/public/season-table?period='+period),
+    getAllSeasonPeriodPrivate: () => http.get('/private/archive/season-list'),
+    getDetailsAboutOldSeason: (period) => http.get('/private/archive/season-table?period='+period),
 }
 
 export default API;
