@@ -6,7 +6,12 @@ const useStyles  = makeStyles((theme) =>({
         padding:"1px",
         width:"24px",
         height:"24px",
-    }
+    },
+    imageBigSize:{
+        padding:"20px",
+        width:"80px",
+        height:"80px",
+    },
 })
 )
 
@@ -17,11 +22,19 @@ const ImageLoader=(props)=>{
 
     const loadImage = (teamName) =>{
         if(teamName !== undefined){
-            return (
-                <div>
-                    <img src={"/image/"+props.logo+".png"} className={classes.imageSize}/>
-                </div>
-            )
+            if(props.type=="big"){
+                return (
+                    <div>
+                        <img src={"/image/"+props.logo+".png"} className={classes.imageBigSize}/>
+                    </div>
+                )
+            } else{
+                return (
+                    <div>
+                        <img src={"/image/"+props.logo+".png"} className={classes.imageSize}/>
+                    </div>
+                )
+            }
         }
     }
 
