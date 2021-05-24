@@ -2,11 +2,14 @@ import { Container } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import 'react-toastify/dist/ReactToastify.css';
-import {Table, TableCell, TableRow, TableBody, TableHead, TableContainer, Paper, Typography, Box, Collapse, IconButton, Badge} from '@material-ui/core';
+import {Table, TableCell, TableRow, TableBody, TableHead, TableContainer, Paper, Typography, Box, Collapse, IconButton, Badge, Button} from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import clsx from 'clsx';
 import ImageLoader from "../components/ImageLoader";
+import ModalWithWDLChart from "./ModalWithWDLChart";
+import ModalWithPointsChart from "./ModalWithPointsChart";
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
     center: {
@@ -44,6 +47,10 @@ const useStyles = makeStyles((theme) => ({
     greenColor: {
       backgroundColor: "#00b300",
     },
+    p1:{
+      padding:"10px",
+      margin:"10px",
+    }
   }));
 
 const TableComponent = (props) =>{
@@ -111,23 +118,46 @@ const TableComponent = (props) =>{
             <TableCell align="center" className={classes.flexRow}>{createCircleWithWinDrawOrLose(row.wdlRecord)}</TableCell>
         </TableRow>
         <TableRow>
-            <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={12}>
             <Collapse in={open} timeout="auto" unmountOnExit>
-                <Box margin={1}>
-                <Typography variant="h6" gutterBottom component="div">
-                    Szczegóły
-                </Typography>
-                <ImageLoader logo={row.shortHand}/>
-                <Table size="small" aria-label="purchases">
-                    <TableHead>
-                    <TableRow>
-                        <TableCell>Rekord</TableCell>
-                    </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      <TableCell>{row.wdlRecord}</TableCell>
-                    </TableBody>
-                </Table>
+                <Box margin={2}>
+                
+                <Grid container spacing={3}>
+                  <Grid item xs={2}> 
+                    <ImageLoader logo={row.shortHand} type={"big"}/>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Table style={{borderTop: '1px solid red'}}>
+                      <TableRow>
+                        <TableCell align="center"></TableCell>
+                        <TableCell align="center">Wygrane</TableCell>
+                        <TableCell align="center">Przegrane</TableCell>
+                        <TableCell align="center">Remis</TableCell>
+                        <TableCell align="center">Gole</TableCell>
+                      </TableRow>
+                      <TableBody>
+                        <TableRow>
+                        <TableCell align="center">Domowy</TableCell>
+                        <TableCell align="center">{row.seasonWinsHome}</TableCell>
+                        <TableCell align="center">{row.seasonLossesHome}</TableCell>
+                        <TableCell align="center">{row.seasonDrawsHome}</TableCell>
+                        <TableCell align="center">{row.seasonDrawsHome}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell align="center">Wyjazd</TableCell>
+                          <TableCell align="center">{row.seasonWinsAway}</TableCell>
+                          <TableCell align="center">{row.seasonLossesAway}</TableCell>
+                          <TableCell align="center">{row.seasonDrawsAway}</TableCell>
+                          <TableCell align="center">{row.seasonDrawsAway}</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                    </Grid>
+                        <Grid item xs>
+                        {<ModalWithWDLChart stats={row.wdlRecord}/> }
+                        {<ModalWithPointsChart stats={row.wdlRecord}/>}
+                        </Grid>
+                </Grid>
                 </Box>
             </Collapse>
             </TableCell>
