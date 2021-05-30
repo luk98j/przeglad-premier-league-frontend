@@ -6,7 +6,7 @@ const http = axios.create({
   headers: {
     "Content-type": "application/json",
     "Access-Control-Allow-Origin": "*",
-    "Authorization": `Bearer ${authHeader()}`
+    "Authorization": authHeader().Authorization
   }
 });
 

@@ -100,7 +100,8 @@ const Login = (props) => {
   };
 
   const handleRegister = (e) => {
-    e.preventDefault();
+    props.history.push("/register");
+    window.location.reload();
   };
   
   const errorMessage = (text) =>{
@@ -117,7 +118,7 @@ const Login = (props) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Zaloguj się
         </Typography>
         </div>
         <form className={classes.form} noValidate>
