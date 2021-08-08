@@ -12,6 +12,11 @@ const useStyles  = makeStyles((theme) =>({
         width:"80px",
         height:"80px",
     },
+    imageMiddleSize:{
+        padding:"10px",
+        width:"70px",
+        height:"70px",
+    },
 })
 )
 
@@ -26,6 +31,15 @@ const ImageLoader=(props)=>{
                 return (
                     <div>
                         <img src={"/image/"+props.logo+".png"} className={classes.imageBigSize}/>
+                    </div>
+                )
+            } else if(props.type=="league"){
+                var logo = props.logo;
+                logo.toLowerCase();
+                const nameCleaned = logo.replace(/\s/g, '-')
+                return(
+                    <div>
+                        <img src={"/image/"+nameCleaned+".png"} className={classes.imageMiddleSize}/>
                     </div>
                 )
             } else{
