@@ -5,6 +5,8 @@ import SeasonTable from "../components/SeasonTable"
 import { Switch, Route } from "react-router-dom";
 import ArchiveSeason from "../components/ArchiveSeason"
 import LeagueMatches from "../components/LeagueMatches"
+import Blog from "../components/Blog"
+
 const SwitchAndRoute = () =>{
    
    return(
@@ -15,6 +17,7 @@ const SwitchAndRoute = () =>{
         <Route exact path="/seasons-table" component={SeasonTable}/>
         <Route exact path="/archive-seasons-table" component={ArchiveSeason}/>
         <Route exact path="/seasons-matches" component={LeagueMatches}/>
+        <Route exact path="/add-post" component={Blog}/>
     </Switch>
    )
 }
