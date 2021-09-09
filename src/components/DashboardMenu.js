@@ -5,7 +5,7 @@ import AuthService from "../services/auth.service";
 import SwitchAndRoute from "../static/SwitchAndRoute";
 import menuHeaderForAllUsers from "../static/MenuTabs";
 import menuHeaderForAuthUsers from "../static/MenuTabsForAuthUsers";
-import { AppBar, Toolbar, Typography, MenuItem, Menu, Button, IconButton } from "@material-ui/core";
+import { AppBar, Toolbar, Typography, MenuItem, Menu, Button, IconButton, requirePropFactory } from "@material-ui/core";
 import { AccountCircle } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -73,13 +73,28 @@ const DashboardMenu = () => {
         {currentUser && 
           menuHeaderForAuthUsers.map((key) => {
             let keyName = Object.keys(key).toString();
-            return (
-              <MenuItem>
-                <Link to={keyName} color="inherit" className={classes.menuTile}>
-                  {key[keyName]}
-                </Link>
-              </MenuItem>
-            )
+            if(currentUser.roles[0]!="ROLE_ADMIN"){
+              if(keyName == "/add-post"){
+                
+              } else{
+                return (
+                  <MenuItem>
+                    <Link to={keyName} color="inherit" className={classes.menuTile}>
+                      {key[keyName]}
+                    </Link>
+                  </MenuItem>
+                )
+              }
+            } else {
+              return (
+                <MenuItem>
+                  <Link to={keyName} color="inherit" className={classes.menuTile}>
+                    {key[keyName]}
+                  </Link>
+                </MenuItem>
+              )
+            }
+            
           }
         
         )}
