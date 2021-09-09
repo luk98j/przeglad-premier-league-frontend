@@ -22,10 +22,12 @@ const useStyles = makeStyles((theme) => ({
   menuTile: {
     color: "white",
     textDecoration: "none",
+    margin:"5px",
   },
   menuItem: {
     color: "black",
     textDecoration: "none",
+    padding:"5px",
   }
 }));
 
@@ -68,6 +70,19 @@ const DashboardMenu = () => {
           </MenuItem>
         )}
       )}
+        {currentUser && 
+          menuHeaderForAuthUsers.map((key) => {
+            let keyName = Object.keys(key).toString();
+            return (
+              <MenuItem>
+                <Link to={keyName} color="inherit" className={classes.menuTile}>
+                  {key[keyName]}
+                </Link>
+              </MenuItem>
+            )
+          }
+        
+        )}
           {currentUser ? (
             <div>
               <IconButton
