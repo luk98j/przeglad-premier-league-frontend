@@ -1,37 +1,48 @@
-import http from "../http-common.js";
+import axios from "axios";
 
-// const register = (username, email, password) => {
-//   return http.post("/signup", {
-//     username,
-//     email,
-//     password,
-//   });
-// };
+const API_URL = "http://localhost:7071/rest/api/auth/";
 
-const login = (userName, password) => {
-  return http
-    .post("/auth/signin", {
-      userName,
+class AuthService {
+  login(username, password) {
+    return axios
+      .post(API_URL + "signin", {
+        username,
+        password
+      })
+      .then(response => {
+        if (response.data.accessToken) {
+          localStorage.setItem("user", JSON.stringify(response.data));
+        }
+
+        return response.data;
+      });
+  }
+
+  logout() {
+    localStorage.removeItem("user");
+  }
+
+  register(username, email, password, name, lastName, country, birthDate) {
+    return axios.post(API_URL + "signup", {
+      username,
+      email,
       password,
-    })
-    .then((response) => {
-      if (response.data.token) {
-        localStorage.setItem('REACT_TOKEN_AUTH', JSON.stringify(response.data));
-      }
+      name,
+      lastName,
+      country,
+      birthDate
     });
-};
+  }
 
-const logout = () => {
-  localStorage.removeItem('REACT_TOKEN_AUTH');
-};
+  confirm(confirmationID) {
+    return axios.post(API_URL + "confirm",{
+      confirmationID
+    });
+  }
 
-const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem('REACT_TOKEN_AUTH'));
-};
+  getCurrentUser() {
+    return JSON.parse(localStorage.getItem('user'));;
+  }
+}
 
-export default {
-  //register,
-  login,
-  logout,
-  getCurrentUser,
-};
+export default new AuthService();
